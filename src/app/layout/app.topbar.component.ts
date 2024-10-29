@@ -17,4 +17,9 @@ export class AppTopBarComponent {
     @ViewChild('topbarmenu') menu!: ElementRef;
 
     constructor(public layoutService: LayoutService) { }
+
+    removeJwtToken() {
+        localStorage.removeItem('auth-token');
+        window.location.reload();
+    }
 }
