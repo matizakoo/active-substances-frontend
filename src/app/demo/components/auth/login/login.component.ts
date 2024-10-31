@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit {
                 .login(this.loginForm.value.username, this.loginForm.value.password)
                 .pipe(take(1))
                 .subscribe((response) => {
-                    console.log('11111')
                     localStorage.setItem(
                         'auth-token',
                         response.headers.get('auth-token') || ''

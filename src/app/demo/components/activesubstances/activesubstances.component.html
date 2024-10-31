@@ -1,0 +1,22 @@
+<div class="card">
+    <div class="col-12">
+        <form [formGroup]="activeSubstanceForm" (ngSubmit)="onSubmit()">
+            <div>
+                <label for="name">Nazwa substancji</label>
+                <input id="name" formControlName="name" type="text" />
+            </div>
+
+            <div>
+                <label for="pregnance">Czy bezpieczna w ciąży</label>
+                <input id="pregnance" formControlName="pregnance" type="checkbox" />
+            </div>
+
+            <div>
+                <label for="dosage">Dawkowanie</label>
+                <input id="dosage" formControlName="dosage" type="text" />
+            </div>
+
+            <button type="submit" [disabled]="activeSubstanceForm.invalid">Dodaj substancję</button>
+        </form>
+    </div>
+</div>

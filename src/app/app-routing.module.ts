@@ -20,6 +20,7 @@ import {DiseasesModule} from "./demo/components/diseases/diseases.module";
                     { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
                     { path: 'kategorie', loadChildren: () => import('./demo/components/category/category.module').then(m => m.CategoryModule) },
                     { path: 'diseases', loadChildren: () => import('./demo/components/diseases/diseases.module').then(m => m.DiseasesModule) },
+                    { path: 'activesubstances', loadChildren: () => import('./demo/components/activesubstances/activesubstances.module').then(m => m.ActivesubstancesModule) },
                 ]
             },
             // {
