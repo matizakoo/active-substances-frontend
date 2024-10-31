@@ -14,7 +14,6 @@ export class ActivesubstancesService {
 
     addActiveSubstance(substance: ActivesubstanceModel): Observable<HttpResponse<InfoDTO>> {
         //TODO: generic headers
-        console.log('auth-token ', localStorage.getItem('auth-token'))
         const headers = new HttpHeaders({
             'auth-token': localStorage.getItem('auth-token'),
             'Content-Type': 'application/json'
@@ -25,5 +24,10 @@ export class ActivesubstancesService {
             { headers, observe: 'response' }
         );
     }
+
+    getActiveSubstances(): Observable<ActivesubstanceModel[]> {
+        return this.http.get<ActivesubstanceModel[]>(StaticService.apiUrl+StaticService.doctor+StaticService.activesubstances);
+    }
+
 
 }

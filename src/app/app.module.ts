@@ -15,9 +15,10 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptor} from "./demo/components/auth/auth.interceptor";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {ConfirmationService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
 import {DiseasesComponent} from "./demo/components/diseases/diseases.component";
 import {DiseasesModule} from "./demo/components/diseases/diseases.module";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
@@ -26,7 +27,8 @@ import {DiseasesModule} from "./demo/components/diseases/diseases.module";
         AppLayoutModule,
         ReactiveFormsModule,
         HttpClientModule,
-        ConfirmDialogModule
+        ConfirmDialogModule,
+        ToastModule
     ],
     providers: [
         {
@@ -42,6 +44,8 @@ import {DiseasesModule} from "./demo/components/diseases/diseases.module";
         NodeService,
         PhotoService,
         ProductService,
+        MessageService,
+
     ],
     bootstrap: [AppComponent],
 })

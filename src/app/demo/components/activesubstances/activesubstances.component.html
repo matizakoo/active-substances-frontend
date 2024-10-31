@@ -1,22 +1,31 @@
 <div class="card">
     <div class="col-12">
+        <p-toast key="global-toast"></p-toast>
+        <h5>Subtancje aktywne</h5>
         <form [formGroup]="activeSubstanceForm" (ngSubmit)="onSubmit()">
-            <div>
-                <label for="name">Nazwa substancji</label>
-                <input id="name" formControlName="name" type="text" />
+            <div class="formgroup-inline">
+                <div class="field">
+                    <label htmlFor="nameOfActiveSubstance" class="p-sr-only">Firstname</label>
+                    <input pInputText formControlName="name" id="nameOfActiveSubstance" type="text" placeholder="name of active substance" />
+                </div>
+                <div class="field">
+                    <label htmlFor="dosage" class="p-sr-only">Lastname</label>
+                    <input pInputText formControlName="dosage" id="dosage" type="text" placeholder="dosage" />
+                </div>
+                <div class="field">
+                    <label htmlFor="description" class="p-sr-only">Informacje dodatkowe</label>
+                    <input pInputText formControlName="description" id="description" type="text" placeholder="description" />
+                </div>
+                <div class="field" style="margin-top:10px;">
+                    <div class="field-checkbox">
+                        <p-checkbox formControlName="pregnance" binary="true" inputId="pregnancyCheck" id="pregnancy"></p-checkbox>
+                        <label for="pregnancy">Pregnancy</label>
+                    </div>
+                </div>
+                <button pButton type="submit" [disabled]="activeSubstanceForm.invalid">Dodaj substancję</button>
             </div>
-
-            <div>
-                <label for="pregnance">Czy bezpieczna w ciąży</label>
-                <input id="pregnance" formControlName="pregnance" type="checkbox" />
-            </div>
-
-            <div>
-                <label for="dosage">Dawkowanie</label>
-                <input id="dosage" formControlName="dosage" type="text" />
-            </div>
-
-            <button type="submit" [disabled]="activeSubstanceForm.invalid">Dodaj substancję</button>
         </form>
+
+        <app-activesubstances-table></app-activesubstances-table>
     </div>
 </div>

@@ -1,41 +1,74 @@
-import { Component } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {Component, OnInit} from '@angular/core';
 import {ActivesubstanceModel} from "../../model/activesubstance-model";
-import {Observable} from "rxjs";
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ActivesubstancesService} from "../../service/activesubstances.service";
+import {ButtonModule} from "primeng/button";
+import {InputTextModule} from "primeng/inputtext";
+import {RadioButtonModule} from "primeng/radiobutton";
+import {CheckboxModule} from "primeng/checkbox";
+import {ToastModule} from "primeng/toast";
+import {ToastService} from "../../service/toast.service";
+import {ActivesubstancesTableComponent} from "../activesubstances-table/activesubstances-table.component";
+import {RefreshService} from "../../service/refresh.service";
 
 @Component({
-  selector: 'app-activesubstances',
-  standalone: true,
+    selector: 'app-activesubstances',
+    standalone: true,
     imports: [
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ButtonModule,
+        InputTextModule,
+        RadioButtonModule,
+        FormsModule,
+        CheckboxModule,
+        ToastModule,
+        ActivesubstancesTableComponent
     ],
-  templateUrl: './activesubstances.component.html',
-  styleUrl: './activesubstances.component.scss'
+    templateUrl: './activesubstances.component.html',
+    styleUrl: './activesubstances.component.scss'
 })
-export class ActivesubstancesComponent {
+export class ActivesubstancesComponent implements OnInit{
     activeSubstanceForm: FormGroup;
+    pregnance: boolean;
+    message: string | null = null;
 
     constructor(
         private fb: FormBuilder,
-        private activeSubstanceService: ActivesubstancesService
+        private activeSubstanceService: ActivesubstancesService,
+        private toast: ToastService,
+        private refreshService: RefreshService,
+
     ) {
-        console.log('token', localStorage.getItem('auth-token'))
         this.activeSubstanceForm = this.fb.group({
             name: ['', Validators.required],
             pregnance: [false],
-            dosage: ['', Validators.required]
+            dosage: ['', Validators.required],
+            description: ['', Validators.required]
         });
     }
 
     onSubmit() {
         if (this.activeSubstanceForm.valid) {
+            console.log(this.activeSubstanceForm.get('dosage').value)
+            console.log(this.activeSubstanceForm.get('pregnance').value)
+            console.log(this.activeSubstanceForm.get('dosage').value)
+            console.log(this.activeSubstanceForm.get('description').value)
             const newSubstance: ActivesubstanceModel = this.activeSubstanceForm.value;
             this.activeSubstanceService.addActiveSubstance(newSubstance).subscribe({
-                next: (response) => console.log('Substancja dodana:', response),
-                error: (error) => console.error('Błąd:', error)
+                next: (response) => {
+                    this.message = 'Dodano substancje aktywną'
+                    this.toast.showSuccess( 'Sukces', this.message);
+                    this.refreshService.triggerRefresh();
+                },
+                error: (error) => {
+                    this.message = error.error.info
+                    this.toast.showError( 'Nie udało się dodać ', this.message);
+                }
             });
         }
+    }
+
+    ngOnInit(): void {
+
     }
 }
