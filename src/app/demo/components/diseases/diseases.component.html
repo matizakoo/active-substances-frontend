@@ -1,5 +1,36 @@
 <div class="card">
     <div class="col-12">
-        <p>diseases works!</p>
+        <p-toast key="global-toast"></p-toast>
+        <h5>Tworzenie choroby</h5>
+        <form [formGroup]="diseasesForm" (ngSubmit)="onSubmit()">
+            <div class="formgroup-inline">
+                <div class="field">
+                    <label for="name" class="p-sr-only">Nazwa choroby</label>
+                    <input pInputText formControlName="name" id="name" type="text" placeholder="Nazwa choroby" />
+                </div>
+                <div class="field">
+                    <label for="description" class="p-sr-only">Opis</label>
+                    <input pInputText formControlName="description" id="description" type="text" placeholder="Opis" />
+                </div>
+                <div class="field">
+                    <p-multiSelect [options]="activeSubstances"
+                                   formControlName="selectedSubstances"
+                    placeholder="Wybierz substancje aktywne"
+                    optionLabel="name"
+                    display="chip">
+                    <ng-template let-activeSub pTemplate="item">
+                        <div class="flex align-items-center">
+                            <span class="ml-2">{{ activeSub.name }}</span>
+                        </div>
+                    </ng-template>
+                    </p-multiSelect>
+                </div>
+                <button pButton type="submit" [disabled]="diseasesForm.invalid">Dodaj substancję</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-12">
+    <app-diseases-table></app-diseases-table>
     </div>
 </div>

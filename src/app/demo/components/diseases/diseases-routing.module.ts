@@ -6,8 +6,8 @@ import {DiseasesComponent} from "./diseases.component";
 
 const routes: Routes = [
     {
-        path: '', // ścieżka względem miejsca załadowania modułu
-        component: DiseasesComponent // Komponent do wyrenderowania
+        path: '',
+        component: DiseasesComponent
     }
 ];
 

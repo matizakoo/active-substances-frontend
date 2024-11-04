@@ -74,14 +74,6 @@ export class ActivesubstancesTableComponent {
         this.activeSubstancesService.getActiveSubstances().subscribe({
             next: (data) => {
                 this.activeSubstances = data;
-                console.log('Lista substancji aktywnych:', data);
-
-                // Sprawdzenie czwartego elementu
-                if (this.activeSubstances.length > 3) {
-                    console.log('Czwarty element (Dosage):', this.activeSubstances[3].dosage)
-                } else {
-                    console.log('Lista ma mniej niż cztery elementy.')
-                }
             },
             error: (err) => console.error('Błąd podczas pobierania listy substancji aktywnych:', err)
         });
@@ -92,8 +84,6 @@ export class ActivesubstancesTableComponent {
         this.refreshService.refreshNeeded$.subscribe(() => {
             this.getActiveSubstances();
         });
-
-        console.log('dosage ', this.activeSubstances[3]?.dosage);
 
         this.customerService.getCustomersLarge().then(customers => {
             this.customers1 = customers;

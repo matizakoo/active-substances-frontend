@@ -19,6 +19,7 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {DiseasesComponent} from "./demo/components/diseases/diseases.component";
 import {DiseasesModule} from "./demo/components/diseases/diseases.module";
 import {ToastModule} from "primeng/toast";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
@@ -28,7 +29,8 @@ import {ToastModule} from "primeng/toast";
         ReactiveFormsModule,
         HttpClientModule,
         ConfirmDialogModule,
-        ToastModule
+        ToastModule,
+        MatTooltipModule
     ],
     providers: [
         {

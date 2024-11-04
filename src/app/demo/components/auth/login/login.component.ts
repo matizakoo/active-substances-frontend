@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit {
                         response.headers.get('auth-token') || ''
                     );
                     if (localStorage.getItem('auth-token') !== '') {
-                        console.log('xx')
                         this.isLoggedIn = true;
                         window.location.reload();
                     }

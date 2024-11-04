@@ -49,10 +49,6 @@ export class ActivesubstancesComponent implements OnInit{
 
     onSubmit() {
         if (this.activeSubstanceForm.valid) {
-            console.log(this.activeSubstanceForm.get('dosage').value)
-            console.log(this.activeSubstanceForm.get('pregnance').value)
-            console.log(this.activeSubstanceForm.get('dosage').value)
-            console.log(this.activeSubstanceForm.get('description').value)
             const newSubstance: ActivesubstanceModel = this.activeSubstanceForm.value;
             this.activeSubstanceService.addActiveSubstance(newSubstance).subscribe({
                 next: (response) => {

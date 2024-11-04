@@ -55,7 +55,6 @@ export class CategoryComponent implements OnInit{
         this.categoryDialog = true;
         for (let i=0; i<this.categories.length; i++) {
             const category = this.categories[i];
-            console.log(category.id)
         }
     }
 
