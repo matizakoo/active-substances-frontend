@@ -1,0 +1,57 @@
+<h5>Lista chorób i powiązanych substancji aktywnych</h5>
+<p-table #dt2 [value]="diseaseModel" dataKey="id" [rows]="10" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['name', 'description', 'activeSubstancesDTOList.name']" responsiveLayout="scroll">
+    <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+            <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt2)"></button>
+            <span class="p-input-icon-left mb-2">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" #filter (input)="onGlobalFilter(dt2, $event)" placeholder="Search Keyword" class="w-full"/>
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 33%;">
+                Disease Name
+                <p-columnFilter type="text" field="name" display="menu" placeholder="Search by disease name"></p-columnFilter>
+            </th>
+            <th style="width: 33%;">
+                Description
+                <p-columnFilter type="text" field="description" display="menu" placeholder="Search by description"></p-columnFilter>
+            </th>
+            <th style="width: 33%;">
+                Active Substances
+                <p-columnFilter type="text" field="activeSubstancesDTOList.name" display="menu" placeholder="Search by active substance"></p-columnFilter>
+            </th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-disease>
+        <tr>
+            <td>{{ disease.name }}</td>
+            <td>{{ disease.description }}</td>
+            <td>
+                <table *ngFor="let substance of disease.activeSubstancesDTOList" style="width: 100%;">
+                    <tr matTooltip="{{ substance.description }}">
+                        <td style="width:33%;">{{ substance.name }}</td>
+                        <td style="width:33%;">{{ substance.dosage }}</td>
+                        <td style="width:33%;">{{ substance.description }}</td>
+                        <td style="width:33%;">{{ substance.pregnance ? 'Tak' : 'Nie' }}</td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="3">No diseases found.</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody">
+        <tr>
+            <td colspan="3">Loading diseases data. Please wait.</td>
+        </tr>
+    </ng-template>
+</p-table>
