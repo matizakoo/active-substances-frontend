@@ -21,6 +21,7 @@ import {DiseasesModule} from "./demo/components/diseases/diseases.module";
                     { path: 'kategorie', loadChildren: () => import('./demo/components/category/category.module').then(m => m.CategoryModule) },
                     { path: 'diseases', loadChildren: () => import('./demo/components/diseases/diseases.module').then(m => m.DiseasesModule) },
                     { path: 'activesubstances', loadChildren: () => import('./demo/components/activesubstances/activesubstances.module').then(m => m.ActivesubstancesModule) },
+                    { path: 'activesubstancesconflicts', loadChildren: () => import('./demo/components/activesubstances-conflicts/activesubstances-conflicts.module').then(m => m.ActivesubstancesConflictsModule) },
                 ]
             },
             // {

@@ -1,5 +1,5 @@
 import {ActivesubstanceModel} from "./activesubstance-model";
-import {ActivesubtanceDTO} from "../modelDTO/activesubtance-dto";
+import {ActivesubstanceDTO} from "../modelDTO/activesubstance-d-t-o";
 
 export interface DiseaseModel {
     id: number;

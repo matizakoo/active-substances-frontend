@@ -25,7 +25,8 @@ export class AppMenuComponent implements OnInit {
                 label: 'Lekarz',
                 items: [
                     { label: 'Choroby', icon: 'pi pi-fw pi-id-card', routerLink: ['/diseases']},
-                    { label: 'Substancje aktywne', icon: 'pi pi-fw pi-id-card', routerLink: ['/activesubstances']}
+                    { label: 'Substancje aktywne', icon: 'pi pi-fw pi-id-card', routerLink: ['/activesubstances']},
+                    { label: 'Substancje aktywne konflikty', icon: 'pi pi-fw pi-id-card', routerLink: ['/activesubstancesconflicts']}
                 ]
             },
             {
