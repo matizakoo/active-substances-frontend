@@ -8,43 +8,13 @@
                     <p-dropdown [options]="diseaseModel"
                                 formControlName="chooseSubstance"
                                 optionLabel="name"
-                                placeholder="Czynnik aktywny"
+                                placeholder="Choroba"
                                 [showClear]="true"></p-dropdown>
-                </div>
-<!--                <div *ngFor="let dropdown of dropdowns; let i = index">-->
-<!--                    <p-dropdown-->
-<!--                        [options]="options"-->
-<!--                        [(ngModel)]="dropdown.selected"-->
-<!--                        placeholder="Wybierz opcję"-->
-<!--                        (onChange)="addDropdown(i)">-->
-<!--                    </p-dropdown>-->
-<!--                    <button *ngIf="dropdowns.length > 1" type="button" (click)="removeDropdown(i)" pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button>-->
-<!--                </div>-->
-                <div class="field">
-                    <div *ngFor="let dropdown of dropdowns; let i = index" style="margin-bottom: 1.5rem;">
-                        <p-dropdown
-                            [options]="diseaseModel"
-                            optionLabel="name"
-                            [(ngModel)]="dropdown.selected"
-                            placeholder="Wybierz chorobę"
-                            [showClear]="true">
-                        </p-dropdown>
-
-                        <button *ngIf="dropdowns.length > 1" type="button" (click)="removeDropdown(i)"
-                                pButton pRipple icon="pi pi-times" style="margin-top: -10px;"
-                                class="p-button-rounded p-button-danger p-button-text" >
-                        </button>
-                    </div>
-                    <button type="button" (click)="addDropdown()"
-                            pButton pRipple icon="pi pi-plus"
-                            class="p-button-rounded p-button-success p-button-text">
-                        Dodaj
-                    </button>
                 </div>
                 <div class="field">
                     <p-multiSelect [options]="diseaseModel"
                                    formControlName="selectedSubstancesDiseases"
-                                   placeholder="Wybierz choroby konfliktujące"
+                                   placeholder="Choroby współistniejące"
                                    optionLabel="name"
                                    display="chip">
                         <ng-template let-diseases pTemplate="item">
@@ -54,7 +24,28 @@
                         </ng-template>
                     </p-multiSelect>
                 </div>
-                <button pButton type="submit" [disabled]="diseasesForm.invalid">Dodaj</button>
+                <div class="field">
+                    <p-multiSelect [options]="activeSubstances"
+                                   formControlName="selectUsedActiveSubstances"
+                                   placeholder="Używane czynniki aktywne"
+                                   optionLabel="name"
+                                   display="chip">
+                        <ng-template let-actSub pTemplate="item">
+                            <div class="flex align-items-center">
+                                <span class="ml-2">{{ actSub.name }}</span>
+                            </div>
+                        </ng-template>
+                    </p-multiSelect>
+                </div>
+                <div class="field" style="margin-top:10px;">
+                    <div class="field-checkbox">
+                        <p-checkbox formControlName="pregnance" binary="true" inputId="pregnancyCheck" id="pregnancy"></p-checkbox>
+                        <label for="pregnancy">Ciąża</label>
+                    </div>
+                </div>
+
+
+                <button pButton type="submit" [disabled]="diseasesForm.invalid">Szukaj</button>
             </div>
         </form>
     </div>

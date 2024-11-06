@@ -30,6 +30,8 @@ import {DiseaseService} from "../../service/disease.service";
 import {ActivesubstancesDiseaseDto} from "../../modelDTO/activesubstances-disease-dto";
 import {InfoDTO} from "../../../info-dto";
 import {RippleModule} from "primeng/ripple";
+import {CheckboxModule} from "primeng/checkbox";
+import {Searchengine} from "../../modelDTO/searchengine";
 
 interface DropdownOption {
     label: string;
@@ -52,14 +54,14 @@ interface DropdownOption {
         TableModule,
         ToastModule,
         CommonModule,
-        RippleModule
+        RippleModule,
+        CheckboxModule
     ],
   templateUrl: './as-search-engine.component.html',
   styleUrl: './as-search-engine.component.scss'
 })
 export class AsSearchEngineComponent {
     diseasesForm: FormGroup;
-    myForm: FormGroup;
     form: FormGroup;
     activeSubstances: ActivesubstanceModel[] = [];
     message: string | null = null;
@@ -67,6 +69,7 @@ export class AsSearchEngineComponent {
     substanceConflicts: ActiveSubstanceConflictModel[];
     diseaseModel: DiseaseModel[] = [];
     selectedSubstancesDiseases: DiseaseModel[] = [];
+    selectUsedActiveSubstances: ActivesubstanceModel[] = [];
     activesubstancesdiseasesModels: ActivesubstancesdiseasesModel[] = [];
 
     constructor(private fb: FormBuilder,
@@ -78,56 +81,13 @@ export class AsSearchEngineComponent {
                 private diseaseService: DiseaseService,
                 private cdr: ChangeDetectorRef) {
         this.diseasesForm = this.fb.group({
-            selectedSubstancesDiseases: [[], Validators.required],
+            selectedSubstancesDiseases: [[]],
             chooseSubstance: ['', Validators.required],
+            selectUsedActiveSubstances: [[]],
+            pregnance: [false]
         });
     }
 
-    dropdowns = [{ selected: null }];
-
-    // addDropdown(index: number) {
-    //     // Sprawdzenie, czy liczba dropdownów jest mniejsza niż liczba elementów w diseaseModel
-    //     if (index === this.dropdowns.length - 1 && this.dropdowns.length < this.diseaseModel.length) {
-    //         this.dropdowns.push({ selected: null }); // Dodajemy na końcu tablicy
-    //     }
-    // }
-    addDropdown() {
-        if (this.dropdowns.length < this.diseaseModel.length) {
-            this.dropdowns.push({ selected: null });
-            this.cdr.detectChanges(); // Wymusza natychmiastową detekcję zmian
-        }
-    }
-
-    removeDropdown(index: number) {
-        // Usuwamy dropdown tylko wtedy, gdy lista zawiera więcej niż jeden element
-        if (this.dropdowns.length > 1) {
-            this.dropdowns.splice(index, 1);
-        }
-    }
-
-    // options: DropdownOption[] = [
-    //     { label: 'Opcja 1', value: '1' },
-    //     { label: 'Opcja 2', value: '2' },
-    //     { label: 'Opcja 3', value: '3' }
-    // ];
-    //
-    // dropdowns = [{ selected: null }]; // Inicjalnie jeden dropdown
-    //
-    // addDropdown(index: number) {
-    //     // Sprawdzenie, czy liczba dropdownów jest mniejsza niż liczba opcji
-    //     if (index === this.dropdowns.length - 1 && this.dropdowns.length < this.options.length) {
-    //         this.dropdowns.push({ selected: null });
-    //     }
-    // }
-    //
-    // removeDropdown(index: number) {
-    //     // Usuwa dropdown na podstawie indeksu
-    //     if (this.dropdowns.length > 1) {
-    //         this.dropdowns.splice(index, 1);
-    //     }
-    // }
-
-// -------------
     getDiseases(): void {
         this.diseaseService.getDiseasesWithActiveSubstances().subscribe({
             next: (data) => {
@@ -162,7 +122,12 @@ export class AsSearchEngineComponent {
                 this.diseasesForm.get('chooseSubstance').value,
                 this.diseasesForm.get('selectedSubstancesDiseases').value);
 
-            console.log(activesubstancesDiseaseDto)
+            const searchengine: Searchengine = new Searchengine(
+                this.diseasesForm.get('chooseSubstance').value,
+                this.diseasesForm.get('selectedSubstancesDiseases').value,
+                this.diseasesForm.get('selectUsedActiveSubstances').value,
+                this.diseasesForm.get('pregnance').value
+            );
 
             this.activesubstancesDiseasesConflictService.addActiveSubstancesDiseasesConflict(activesubstancesDiseaseDto).subscribe({
                 next: (response) => {
