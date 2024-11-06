@@ -1,4 +1,4 @@
-export class ActivesubstanceDTO {
+export class ActivesubstanceDto {
     id: number;
     name: string;
     pregnance: boolean;

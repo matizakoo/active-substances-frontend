@@ -25,8 +25,10 @@ export class AppMenuComponent implements OnInit {
                 label: 'Lekarz',
                 items: [
                     { label: 'Choroby', icon: 'pi pi-fw pi-id-card', routerLink: ['/diseases']},
-                    { label: 'Substancje aktywne', icon: 'pi pi-fw pi-id-card', routerLink: ['/activesubstances']},
-                    { label: 'Substancje aktywne konflikty', icon: 'pi pi-fw pi-id-card', routerLink: ['/activesubstancesconflicts']}
+                    { label: 'Czynniki aktywne', icon: 'pi pi-fw pi-id-card', routerLink: ['/activesubstances']},
+                    { label: 'Czynniki aktywne konflikty', icon: 'pi pi-fw pi-id-card', routerLink: ['/activesubstancesconflicts']},
+                    { label: 'Czynniki aktywne z chorobami konflikty', icon: 'pi pi-fw pi-id-card', routerLink: ['/activesubstancesdiseasesconflicts']},
+                    { label: 'Wyszukaj czynnik aktywny dla przypadku', icon: 'pi pi-fw pi-id-card', routerLink: ['/assearchengine']}
                 ]
             },
             {

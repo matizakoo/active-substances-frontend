@@ -12,15 +12,15 @@
     <ng-template pTemplate="header">
         <tr>
             <th style="width: 33%;">
-                Disease Name
+                Nazwa
                 <p-columnFilter type="text" field="name" display="menu" placeholder="Search by disease name"></p-columnFilter>
             </th>
             <th style="width: 33%;">
-                Description
+                Opis
                 <p-columnFilter type="text" field="description" display="menu" placeholder="Search by description"></p-columnFilter>
             </th>
             <th style="width: 33%;">
-                Active Substances
+                Czynniki aktywne
                 <p-columnFilter type="text" field="activeSubstancesDTOList.name" display="menu" placeholder="Search by active substance"></p-columnFilter>
             </th>
         </tr>
@@ -31,8 +31,8 @@
             <td>{{ disease.name }}</td>
             <td>{{ disease.description }}</td>
             <td>
-                <table *ngFor="let substance of disease.activeSubstancesDTOList" style="width: 100%;">
-                    <tr matTooltip="{{ substance.description }}">
+                <table *ngFor="let substance of disease.activeSubstancesDTOList" style="width: 100%;" matTooltip="{{ substance.description }}">
+                    <tr >
                         <td style="width:33%;">{{ substance.name }}</td>
                         <td style="width:33%;">{{ substance.dosage }}</td>
                         <td style="width:33%;">{{ substance.description }}</td>

@@ -34,7 +34,7 @@ export class DiseasesTableComponent implements OnInit{
                 private refreshService: RefreshService,) {
     }
 
-    getActiveSubstances(): void {
+    getDiseases(): void {
         this.diseaseService.getDiseasesWithActiveSubstances().subscribe({
             next: (data) => {
                 this.diseaseModel = data;
@@ -44,9 +44,9 @@ export class DiseasesTableComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        this.getActiveSubstances();
+        this.getDiseases();
         this.refreshService.refreshNeeded$.subscribe(() => {
-            this.getActiveSubstances();
+            this.getDiseases();
         });
     }
 }

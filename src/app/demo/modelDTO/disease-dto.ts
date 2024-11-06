@@ -1,12 +1,13 @@
 import {ActivesubstanceModel} from "../model/activesubstance-model";
-import {ActivesubstanceDTO} from "./activesubstance-d-t-o";
+import {ActivesubstanceDto} from "./activesubstance-dto";
 
 export class DiseaseDTO {
+    id: number;
     name: string;
     description: string;
-    activeSubstancesDTOList: ActivesubstanceDTO[];
+    activeSubstancesDTOList: ActivesubstanceDto[];
 
-    constructor(name: string, description: string, activeSubstancesDTOList: ActivesubstanceDTO[]) {
+    constructor(name: string, description: string, activeSubstancesDTOList: ActivesubstanceDto[]) {
         this.name = name;
         this.description = description;
         this.activeSubstancesDTOList = activeSubstancesDTOList;
