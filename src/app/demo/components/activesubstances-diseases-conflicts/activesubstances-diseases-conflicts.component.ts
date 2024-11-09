@@ -75,7 +75,6 @@ export class ActivesubstancesDiseasesConflictsComponent {
         this.activesubstancesDiseasesConflictService.getActiveSubstancesDiseasesConflict().subscribe({
             next: (data) => {
                 this.activesubstancesdiseasesModels = data;
-                console.log("Loaded items:", this.activesubstancesdiseasesModels);
             },
             error: (err) => {
                 console.error('Błąd podczas pobierania konfliktów substancji:', err);
@@ -123,4 +122,16 @@ export class ActivesubstancesDiseasesConflictsComponent {
             error: (err) => console.error('Błąd podczas pobierania listy substancji aktywnych:', err)
         });
     }
+
+    getDiseasesForActiveSubstance(id: number): void {
+        console.log(id)
+        this.diseaseService.getDiseasesWithActiveSubstancesWithoutConflict(id).subscribe({
+            next: (data) => {
+                this.diseaseModel = data;
+            },
+            error: (err) => console.error('Błąd podczas pobierania listy substancji aktywnych:', err)
+        });
+    }
+
+
 }

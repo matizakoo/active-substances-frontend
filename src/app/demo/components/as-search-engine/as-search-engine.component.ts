@@ -31,7 +31,9 @@ import {ActivesubstancesDiseaseDto} from "../../modelDTO/activesubstances-diseas
 import {InfoDTO} from "../../../info-dto";
 import {RippleModule} from "primeng/ripple";
 import {CheckboxModule} from "primeng/checkbox";
-import {Searchengine} from "../../modelDTO/searchengine";
+import {SearchengineDTO} from "../../modelDTO/searchengineDTO";
+import {AsSearchEngineService} from "../../service/as-search-engine.service";
+import {SearchEngineModel} from "../../model/searchEngine-model";
 
 interface DropdownOption {
     label: string;
@@ -65,12 +67,13 @@ export class AsSearchEngineComponent {
     form: FormGroup;
     activeSubstances: ActivesubstanceModel[] = [];
     message: string | null = null;
-    chooseSubstance: ActivesubstanceModel;
+    chooseSubstance: ActivesubstanceModel[];
     substanceConflicts: ActiveSubstanceConflictModel[];
     diseaseModel: DiseaseModel[] = [];
     selectedSubstancesDiseases: DiseaseModel[] = [];
     selectUsedActiveSubstances: ActivesubstanceModel[] = [];
     activesubstancesdiseasesModels: ActivesubstancesdiseasesModel[] = [];
+    searchEngineModel: SearchEngineModel[] = [];
 
     constructor(private fb: FormBuilder,
                 private activeSubstancesService: ActivesubstancesService,
@@ -78,6 +81,7 @@ export class AsSearchEngineComponent {
                 private activesubstancesconflictsService: ActivesubstancesconflictsService,
                 private refreshService: RefreshService,
                 private toast: ToastService,
+                private searchEngine: AsSearchEngineService,
                 private diseaseService: DiseaseService,
                 private cdr: ChangeDetectorRef) {
         this.diseasesForm = this.fb.group({
@@ -107,7 +111,6 @@ export class AsSearchEngineComponent {
         this.activesubstancesDiseasesConflictService.getActiveSubstancesDiseasesConflict().subscribe({
             next: (data) => {
                 this.activesubstancesdiseasesModels = data;
-                console.log("Loaded items:", this.activesubstancesdiseasesModels);
             },
             error: (err) => {
                 console.error('Błąd podczas pobierania konfliktów substancji:', err);
@@ -118,27 +121,24 @@ export class AsSearchEngineComponent {
 
     onSubmit() {
         if (this.diseasesForm.valid) {
-            const activesubstancesDiseaseDto: ActivesubstancesDiseaseDto = new ActivesubstancesDiseaseDto(
-                this.diseasesForm.get('chooseSubstance').value,
-                this.diseasesForm.get('selectedSubstancesDiseases').value);
-
-            const searchengine: Searchengine = new Searchengine(
+            const searchengine: SearchengineDTO = new SearchengineDTO(
                 this.diseasesForm.get('chooseSubstance').value,
                 this.diseasesForm.get('selectedSubstancesDiseases').value,
                 this.diseasesForm.get('selectUsedActiveSubstances').value,
                 this.diseasesForm.get('pregnance').value
             );
 
-            this.activesubstancesDiseasesConflictService.addActiveSubstancesDiseasesConflict(activesubstancesDiseaseDto).subscribe({
-                next: (response) => {
-                    const infoDTO: InfoDTO = response.body;
-                    this.message = infoDTO.info;
-                    this.toast.showSuccess('Pomyślnie dodano skonfliktowane substancje aktywną z chorobami', 'Sukces');
-                    this.getActiveSubstancesDiseases();
+            console.log(searchengine)
+
+            this.searchEngine.getActiveSubstanceSearchEngine(searchengine).subscribe({
+                next: (data: SearchEngineModel[]) => {
+                    this.searchEngineModel = data;
+                    this.toast.showSuccess('Udało się znaleźć szukane substancje', 'Sukces');
+                    console.log('return: ', this.searchEngineModel);
                 },
                 error: (error) => {
-                    this.message = error.error.info
-                    this.toast.showError( this.message, 'Nie udało się dodać ');
+                    console.error('Błąd pobierania danych: ', error);
+                    this.toast.showError('Nie udało się pobrać danych', 'Błąd');
                 }
             });
         }

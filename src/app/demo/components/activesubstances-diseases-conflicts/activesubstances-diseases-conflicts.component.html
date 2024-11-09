@@ -1,7 +1,7 @@
 <div class="card">
     <div class="col-12">
         <p-toast key="global-toast"></p-toast>
-        <h5>Tworzenie konfliktów chorób z czynnikami aktywnymi</h5>
+        <h5>Tworzenie konfliktów czynnika aktywnego z chorobami</h5>
         <form [formGroup]="diseasesForm" (ngSubmit)="onSubmit()">
             <div class="formgroup-inline">
                 <div class="field">
@@ -9,6 +9,7 @@
                                 formControlName="chooseSubstance"
                                 optionLabel="name"
                                 placeholder="Czynnik aktywny"
+                                (onChange)="getDiseasesForActiveSubstance($event.value.id)"
                                 [showClear]="true"></p-dropdown>
                 </div>
                 <div class="field">

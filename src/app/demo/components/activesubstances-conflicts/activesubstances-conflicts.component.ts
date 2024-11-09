@@ -116,7 +116,6 @@ export class ActivesubstancesConflictsComponent implements OnInit{
         this.activesubstancesconflictsService.getSubstanceConflicts().subscribe({
             next: (data) => {
                 this.substanceConflicts = data;
-                console.log("Loaded items:", this.substanceConflicts);
             },
             error: (err) => {
                 console.error('Błąd podczas pobierania konfliktów substancji:', err);

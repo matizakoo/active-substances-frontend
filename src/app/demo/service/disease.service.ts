@@ -26,4 +26,10 @@ export class DiseaseService {
     getDiseasesWithActiveSubstances(): Observable<DiseaseModel[]> {
         return this.http.get<DiseaseModel[]>(StaticService.apiUrl+StaticService.doctor+StaticService.disease);
     }
+
+    getDiseasesWithActiveSubstancesWithoutConflict(id: number): Observable<DiseaseModel[]> {
+        return this.http.get<DiseaseModel[]>(StaticService.apiUrl+StaticService.doctor+StaticService.activeSubstancesDiseasesConflicts + `/activeSubstanceId/${id}`);
+    }
+
+
 }

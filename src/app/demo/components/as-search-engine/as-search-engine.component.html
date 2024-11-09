@@ -1,15 +1,22 @@
 <div class="card">
     <div class="col-12">
         <p-toast key="global-toast"></p-toast>
-        <h5>Tworzenie konfliktów chorób z czynnikami aktywnymi</h5>
+        <h5>Wyszukaj czynniki aktywne dla choroby</h5>
         <form [formGroup]="diseasesForm" (ngSubmit)="onSubmit()">
             <div class="formgroup-inline">
                 <div class="field">
-                    <p-dropdown [options]="diseaseModel"
-                                formControlName="chooseSubstance"
-                                optionLabel="name"
-                                placeholder="Choroba"
-                                [showClear]="true"></p-dropdown>
+                    <p-multiSelect [options]="diseaseModel"
+                                   formControlName="chooseSubstance"
+                                   placeholder="Choroba"
+                                   optionLabel="name"
+                                   display="chip"
+                                   [showClear]="true">
+                        <ng-template let-diseases pTemplate="item">
+                            <div class="flex align-items-center">
+                                <span class="ml-2">{{ diseases.name }}</span>
+                            </div>
+                        </ng-template>
+                    </p-multiSelect>
                 </div>
                 <div class="field">
                     <p-multiSelect [options]="diseaseModel"
@@ -50,55 +57,22 @@
         </form>
     </div>
 
-    <div class="col-12">
-        <h5>Substancje aktywne, które nie mogą zostać użyte w przypadku chorób współistniejących</h5>
-        <p-table #dt2 [value]="activesubstancesdiseasesModels" dataKey="id" [rows]="10" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['name', 'description', 'activeSubstancesDTOList.name']" responsiveLayout="scroll">
-            <ng-template pTemplate="caption">
-                <div class="flex justify-content-between flex-column sm:flex-row">
-                    <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt2)"></button>
-                    <span class="p-input-icon-left mb-2">
-                <i class="pi pi-search"></i>
-                <input pInputText type="text" #filter (input)="onGlobalFilter(dt2, $event)" placeholder="Search Keyword" class="w-full"/>
-            </span>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th style="width: 33%;">
-                        Czynnik aktywny
-                        <p-columnFilter type="text" field="name" display="menu" placeholder="Search by disease name"></p-columnFilter>
-                    </th>
-                    <th style="width: 33%;">
-                        Choroby
-                        <p-columnFilter type="text" field="description" display="menu" placeholder="Search by description"></p-columnFilter>
-                    </th>
-                </tr>
-            </ng-template>
-
-            <ng-template pTemplate="body" let-activesubstancesdiseases>
-                <tr>
-                    <td matTooltip="{{ activesubstancesdiseases.activesubstanceDTO.pregnance ? 'Zabroniony w ciąży' : '' }}, dawkowanie: {{activesubstancesdiseases.activesubstanceDTO.dosage}}, {{activesubstancesdiseases.activesubstanceDTO.description}}">{{ activesubstancesdiseases.activesubstanceDTO.name }}</td>
-                    <td>
-                        <table *ngFor="let acd of activesubstancesdiseases.diseaseDTO" style="width: 100%;">
-                            <tr>
-                                <td style="width:33%;">{{ acd.name }}</td>
-                            </tr>
-                        </table>
-
-                    </td>
-                </tr>
-            </ng-template>
-
-            <ng-template pTemplate="emptymessage">
-                <tr>
-                    <td colspan="3">Nie odnaleziono żadnych konfliktów</td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="loadingbody">
-                <tr>
-                    <td colspan="3">Trwa ładowanie danych</td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
+    <p-table [value]="searchEngineModel">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Disease</th>
+                <th>Active Substances</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr>
+                <td>{{ rowData.disease.name }}</td>
+                <td>
+                    <ul>
+                        <li *ngFor="let substance of rowData.activeSubstances">{{ substance.name }}</li> <!-- Lista substancji -->
+                    </ul>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>

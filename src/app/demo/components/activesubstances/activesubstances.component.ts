@@ -43,7 +43,7 @@ export class ActivesubstancesComponent implements OnInit{
             name: ['', Validators.required],
             pregnance: [false],
             dosage: ['', Validators.required],
-            description: ['', Validators.required]
+            description: ['']
         });
     }
 

@@ -58,7 +58,7 @@ export class DiseasesComponent implements OnInit{
 
         this.diseasesForm = this.fb.group({
             name: ['', Validators.required],
-            description: ['', Validators.required],
+            description: [''],
             selectedSubstances: [[], Validators.required]
         });
     }

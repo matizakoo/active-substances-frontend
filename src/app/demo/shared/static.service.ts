@@ -11,6 +11,7 @@ export class StaticService {
     static disease: string = 'disease';
     static activeSubstancesConflicts: string = 'activeSubstancesConflicts';
     static activeSubstancesDiseasesConflicts: string = 'activeSubstancesDiseasesConflicts';
+    static searchEngine: string = 'searchEngine';
     static headers = new HttpHeaders({
         'auth-token': localStorage.getItem('auth-token'),
         'Content-Type': 'application/json'
