@@ -23,13 +23,15 @@ import {ToastService} from "../../service/toast.service";
 import {DiseaseDTO} from "../../modelDTO/disease-dto";
 import {ActiveSubstanceConflictDTO} from "../../modelDTO/activesubstancesconflict-dto";
 import {DropdownModule} from "primeng/dropdown";
-import {SelectItem} from "primeng/api";
+import {Confirmation, ConfirmationService, SelectItem} from "primeng/api";
 import {ActivesubstancesconflictsService} from "../../service/activesubstancesconflicts.service";
 import {InfoDTO} from "../../../info-dto";
 import {ActiveSubstanceConflictModel} from "../../model/activesubstancesconflict-model";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {NgForOf} from "@angular/common";
 import {TableModule} from "primeng/table";
+import {RippleModule} from "primeng/ripple";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @Component({
   selector: 'app-activesubstances-conflicts',
@@ -48,7 +50,10 @@ import {TableModule} from "primeng/table";
         MatTooltipModule,
         NgForOf,
         TableModule,
+        RippleModule,
+        ConfirmDialogModule
     ],
+    providers: [ConfirmationService],
   templateUrl: './activesubstances-conflicts.component.html',
   styleUrl: './activesubstances-conflicts.component.scss'
 })
@@ -65,7 +70,8 @@ export class ActivesubstancesConflictsComponent implements OnInit{
                 private activeSubstancesService: ActivesubstancesService,
                 private activesubstancesconflictsService: ActivesubstancesconflictsService,
                 private refreshService: RefreshService,
-                private toast: ToastService) {
+                private toast: ToastService,
+                private confirmation: ConfirmationService) {
     }
 
     ngOnInit(): void {
@@ -74,6 +80,9 @@ export class ActivesubstancesConflictsComponent implements OnInit{
         this.diseasesForm = this.fb.group({
             selectedSubstances: [[], Validators.required],
             chooseSubstance: ['', Validators.required]
+        });
+        this.refreshService.refreshNeeded$.subscribe(() => {
+            this.getSubstanceConflicts();
         });
     }
 
@@ -121,6 +130,28 @@ export class ActivesubstancesConflictsComponent implements OnInit{
                 console.error('Błąd podczas pobierania konfliktów substancji:', err);
             }
         });
+    }
 
+    confirmDelete(id: number, id2: number) {
+        this.confirmation.confirm({
+            message: 'Czy na pewno chcesz usunąć ten element?',
+            acceptLabel: 'Tak',
+            rejectLabel: 'Nie',
+            header: 'Potwierdzenie usunięcia',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.activesubstancesconflictsService.deleteSustancesConflict(id, id2).subscribe({
+                    next: (data) => {
+                        this.toast.showSuccess('Udało się usunąć konflikt', 'Sukces');
+                        this.refreshService.triggerRefresh();
+                    },
+                    error: (err) => {
+                        console.error('Coś poszło nie tak')
+                    }
+                })
+            },
+            reject: () => {
+            }
+        });
     }
 }

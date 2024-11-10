@@ -29,5 +29,9 @@ export class ActivesubstancesService {
         return this.http.get<ActivesubstanceModel[]>(StaticService.apiUrl+StaticService.doctor+StaticService.activesubstances);
     }
 
+    deleteActiveSubstance(id: number): Observable<InfoDTO> {
+        return this.http.delete<InfoDTO>(StaticService.apiUrl+StaticService.doctor+StaticService.activesubstances + `/${id}`);
+    }
+
 
 }

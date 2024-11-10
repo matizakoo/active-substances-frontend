@@ -4,7 +4,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {InputTextModule} from "primeng/inputtext";
 import {MultiSelectModule} from "primeng/multiselect";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {SharedModule} from "primeng/api";
+import {ConfirmationService, SharedModule} from "primeng/api";
 import {TableModule} from "primeng/table";
 import {ToastModule} from "primeng/toast";
 import {ActivesubstanceModel} from "../../model/activesubstance-model";
@@ -22,6 +22,8 @@ import {ActivesubstancesDiseasesConflictService} from "../../service/activesubst
 import {ActivesubstancesdiseasesModel} from "../../model/activesubstancesdiseases-model";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {NgForOf} from "@angular/common";
+import {RippleModule} from "primeng/ripple";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @Component({
   selector: 'app-activesubstances-diseases-conflicts',
@@ -36,8 +38,11 @@ import {NgForOf} from "@angular/common";
         TableModule,
         ToastModule,
         MatTooltipModule,
-        NgForOf
+        NgForOf,
+        RippleModule,
+        ConfirmDialogModule
     ],
+    providers: [ConfirmationService],
   templateUrl: './activesubstances-diseases-conflicts.component.html',
   styleUrl: './activesubstances-diseases-conflicts.component.scss'
 })
@@ -58,6 +63,7 @@ export class ActivesubstancesDiseasesConflictsComponent {
                 private activesubstancesconflictsService: ActivesubstancesconflictsService,
                 private refreshService: RefreshService,
                 private toast: ToastService,
+                private confirmation: ConfirmationService,
                 private diseaseService: DiseaseService) {
     }
 
@@ -133,5 +139,26 @@ export class ActivesubstancesDiseasesConflictsComponent {
         });
     }
 
-
+    confirmDelete(id: number, id2: number, arg1: string, arg2: string) {
+        this.confirmation.confirm({
+            message: `Czy relacje czynnika aktynwego ${arg2} wraz z ${arg1}?`,
+            acceptLabel: 'Tak',
+            rejectLabel: 'Nie',
+            header: 'Potwierdzenie usunięcia',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.activesubstancesDiseasesConflictService.deleteActiveSubstanceWithDisease(id, id2).subscribe({
+                    next: (data) => {
+                        this.toast.showSuccess('Udało się usunąć', 'Sukces');
+                        this.refreshService.triggerRefresh();
+                    },
+                    error: (err) => {
+                        console.error('Coś poszło nie tak')
+                    }
+                })
+            },
+            reject: () => {
+            }
+        });
+    }
 }

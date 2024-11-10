@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
 import {ActiveSubstanceConflictDTO} from "../modelDTO/activesubstancesconflict-dto";
 import {Observable} from "rxjs";
 import {InfoDTO} from "../../info-dto";
@@ -26,5 +26,12 @@ export class ActivesubstancesDiseasesConflictService {
 
     getActiveSubstancesDiseasesConflict(): Observable<ActivesubstancesdiseasesModel[]> {
         return this.http.get<ActivesubstancesdiseasesModel[]>(StaticService.apiUrl+StaticService.doctor+StaticService.activeSubstancesDiseasesConflicts);
+    }
+
+    deleteActiveSubstanceWithDisease(id: number, id2: number): Observable<InfoDTO> {
+        let params = new HttpParams()
+            .set('id', id.toString())
+            .set('id2', id2.toString());
+        return this.http.delete<InfoDTO>(StaticService.apiUrl+StaticService.doctor+StaticService.activeSubstancesDiseasesConflicts, {params})
     }
 }

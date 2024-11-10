@@ -62,9 +62,17 @@
                         <table *ngFor="let acd of activesubstancesdiseases.diseaseDTO" style="width: 100%;">
                             <tr>
                                 <td style="width:33%;">{{ acd.name }}</td>
+                                <td style="width:33%;">
+                                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"
+                                            (click)="confirmDelete(activesubstancesdiseases.activesubstanceDTO.id,
+                                acd.id,
+                                acd.name,
+                                activesubstancesdiseases.activesubstanceDTO.name
+                                )">
+                                    </button>
+                                </td>
                             </tr>
                         </table>
-
                     </td>
                 </tr>
             </ng-template>
@@ -82,3 +90,5 @@
         </p-table>
     </div>
 </div>
+
+<p-confirmDialog></p-confirmDialog>

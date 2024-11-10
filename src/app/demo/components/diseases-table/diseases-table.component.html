@@ -23,6 +23,10 @@
                 Czynniki aktywne
                 <p-columnFilter type="text" field="activeSubstancesDTOList.name" display="menu" placeholder="Search by active substance"></p-columnFilter>
             </th>
+            <th style="width: 33%;">
+                Operacje
+            </th>
+
         </tr>
     </ng-template>
 
@@ -39,8 +43,10 @@
                         <td style="width:33%;">{{ substance.pregnance ? 'Tak' : 'Nie' }}</td>
                     </tr>
                 </table>
-
             </td>
+            <td><button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"
+                        (click)="confirmDelete(disease.id, disease.name)">
+            </button></td>
         </tr>
     </ng-template>
 
@@ -55,3 +61,4 @@
         </tr>
     </ng-template>
 </p-table>
+<p-confirmDialog></p-confirmDialog>

@@ -5,7 +5,7 @@
         <form [formGroup]="diseasesForm" (ngSubmit)="onSubmit()">
             <div class="formgroup-inline">
                 <div class="field">
-                    <p-multiSelect [options]="diseaseModel"
+                    <p-dropdown [options]="diseaseModel"
                                    formControlName="chooseSubstance"
                                    placeholder="Choroba"
                                    optionLabel="name"
@@ -16,7 +16,7 @@
                                 <span class="ml-2">{{ diseases.name }}</span>
                             </div>
                         </ng-template>
-                    </p-multiSelect>
+                    </p-dropdown>
                 </div>
                 <div class="field">
                     <p-multiSelect [options]="diseaseModel"
@@ -60,17 +60,19 @@
     <p-table [value]="searchEngineModel">
         <ng-template pTemplate="header">
             <tr>
-                <th>Disease</th>
-                <th>Active Substances</th>
+                <th style="width:50%;">Choroba</th>
+                <th style="width:50%;">Odfiltrowane substancje aktywne</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData>
             <tr>
                 <td>{{ rowData.disease.name }}</td>
                 <td>
-                    <ul>
-                        <li *ngFor="let substance of rowData.activeSubstances">{{ substance.name }}</li> <!-- Lista substancji -->
-                    </ul>
+                    <table *ngFor="let substance of rowData.activeSubstances" style="width: 100%;">
+                        <tr>
+                            <td>{{ substance.name }}</td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
         </ng-template>

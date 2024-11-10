@@ -31,5 +31,9 @@ export class DiseaseService {
         return this.http.get<DiseaseModel[]>(StaticService.apiUrl+StaticService.doctor+StaticService.activeSubstancesDiseasesConflicts + `/activeSubstanceId/${id}`);
     }
 
+    deleteDisease(id: number): Observable<InfoDTO> {
+        return this.http.delete<InfoDTO>(StaticService.apiUrl+StaticService.doctor+StaticService.disease + `/${id}`);
+    }
+
 
 }

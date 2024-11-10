@@ -5,7 +5,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {InputTextModule} from "primeng/inputtext";
 import {MultiSelectModule} from "primeng/multiselect";
 import {ProgressBarModule} from "primeng/progressbar";
-import {SharedModule} from "primeng/api";
+import {ConfirmationService, SharedModule} from "primeng/api";
 import {SliderModule} from "primeng/slider";
 import {Table, TableModule} from "primeng/table";
 import {Customer, Representative} from "../../api/customer";
@@ -15,6 +15,9 @@ import {ProductService} from "../../service/product.service";
 import {ActivesubstancesService} from "../../service/activesubstances.service";
 import {ActivesubstanceModel} from "../../model/activesubstance-model";
 import {RefreshService} from "../../service/refresh.service";
+import {RippleModule} from "primeng/ripple";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ToastService} from "../../service/toast.service";
 
 interface expandedRows {
     [key: string]: boolean;
@@ -33,8 +36,11 @@ interface expandedRows {
         ProgressBarModule,
         SharedModule,
         SliderModule,
-        TableModule
+        TableModule,
+        RippleModule,
+        ConfirmDialogModule
     ],
+    providers: [ConfirmationService],
   templateUrl: './activesubstances-table.component.html',
   styleUrl: './activesubstances-table.component.scss'
 })
@@ -67,7 +73,9 @@ export class ActivesubstancesTableComponent {
         private customerService: CustomerService,
         private productService: ProductService,
         private activeSubstancesService: ActivesubstancesService,
-        private refreshService: RefreshService
+        private refreshService: RefreshService,
+        private confirmation: ConfirmationService,
+        private toast: ToastService,
     ) { }
 
     getActiveSubstances(): void {
@@ -95,6 +103,10 @@ export class ActivesubstancesTableComponent {
         this.customerService.getCustomersMedium().then(customers => this.customers2 = customers);
         this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
         this.productService.getProductsWithOrdersSmall().then(data => this.products = data);
+
+        this.refreshService.refreshNeeded$.subscribe(() => {
+            this.getActiveSubstances();
+        });
 
         this.representatives = [
             { name: 'Amy Elsner', image: 'amyelsner.png' },
@@ -169,5 +181,28 @@ export class ActivesubstancesTableComponent {
     clear(table: Table) {
         table.clear();
         this.filter.nativeElement.value = '';
+    }
+
+    confirmDelete(id: number, name: string) {
+        this.confirmation.confirm({
+            message: `Czy na pewno chcesz usunąć elemet ${name}?`,
+            acceptLabel: 'Tak',
+            rejectLabel: 'Nie',
+            header: 'Potwierdzenie usunięcia',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.activeSubstancesService.deleteActiveSubstance(id).subscribe({
+                    next: (data) => {
+                        this.toast.showSuccess('Udało się usunąć konflikt', 'Sukces');
+                        this.refreshService.triggerRefresh();
+                    },
+                    error: (err) => {
+                        console.error('Coś poszło nie tak')
+                    }
+                })
+            },
+            reject: () => {
+            }
+        });
     }
 }
