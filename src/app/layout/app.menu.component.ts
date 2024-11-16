@@ -32,6 +32,14 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             {
+                label: 'Pacjent',
+                items: [
+                    { label: 'Pacjenci', icon: 'pi pi-fw pi-id-card', routerLink: ['/patient']},
+                    { label: 'Zarządzaj chorobą pacjenta', icon: 'pi pi-fw pi-cog', routerLink: ['/patientmgmt']},
+                ]
+            },
+
+            {
                 label: 'Reklamacje',
                 items: [
                     { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },

@@ -1,0 +1,76 @@
+<h5>Lista pacjentów (nie zahashowane)</h5>
+<p-table #dt1 [value]="patientModels" dataKey="id" [rows]="10" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="min-width: 12rem">
+                <div class="flex justify-content-between align-items-center">
+                    Id
+                    <p-columnFilter type="text" field="name" display="menu" placeholder="Search by name"></p-columnFilter>
+                </div>
+            </th>
+            <th style="min-width: 12rem">
+                <div class="flex justify-content-between align-items-center">
+                    Imie
+                    <p-columnFilter type="text" field="name" display="menu" placeholder="Search by name"></p-columnFilter>
+                </div>
+            </th>
+
+            <th style="min-width: 12rem">
+                <div class="flex justify-content-between align-items-center">
+                    Nazwisko
+                    <p-columnFilter type="text" field="dosage" display="menu" placeholder="Search by dosage"></p-columnFilter>
+                </div>
+            </th>
+            <th style="min-width: 14rem">
+                <div class="flex justify-content-between align-items-center">
+                    Pesel
+                    <p-columnFilter type="text" field="description" display="menu" placeholder="Search by description"></p-columnFilter>
+                </div>
+            </th>
+            <th style="min-width: 12rem">
+                <div class="flex justify-content-between align-items-center">
+                    Wiek
+                    <p-columnFilter type="text" field="pregnance" display="menu" placeholder="Search by pregnancy status"></p-columnFilter>
+                </div>
+            </th>
+            <th style="min-width: 12rem">
+                <div class="flex justify-content-between align-items-center">
+                    Płeć
+                </div>
+            </th>
+            <th style="min-width: 12rem">
+                <div class="flex justify-content-between align-items-center">
+                    Lekarz
+                </div>
+            </th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-patients>
+        <tr>
+            <td>{{ patients.id }}</td>
+            <td>{{ patients.name }}</td>
+            <td>{{ patients.surname }}</td>
+            <td>{{ patients.uniqueId }}</td>
+            <td>{{ patients.age }}</td>
+            <td>{{ patients.gender }}</td>
+            <td>{{ patients.userDTO.username }}</td>
+            <td><button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"
+                        (click)="confirmDelete(patients.id)">
+            </button></td>
+        </tr>
+    </ng-template>
+
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="8">No customers found.</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody">
+        <tr>
+            <td colspan="8">Loading customers data. Please wait.</td>
+        </tr>
+    </ng-template>
+</p-table>
+<p-confirmDialog></p-confirmDialog>

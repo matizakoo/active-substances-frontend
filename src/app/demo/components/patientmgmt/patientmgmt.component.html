@@ -1,0 +1,126 @@
+<div class="card">
+    <p-toast key="global-toast"></p-toast>
+        <form [formGroup]="getPatient" (ngSubmit)="onSubmit()">
+            <div class="formgroup-inline">
+                <div class="field">
+                    <label htmlFor="patientId" class="p-sr-only">id</label>
+                    <input pInputText formControlName="patientId" id="patientId" type="number" placeholder="patientId"/>
+                </div>
+
+                <button pButton type="submit" [disabled]="getPatient.invalid">Wyszukaj</button>
+            </div>
+        </form>
+        <form>
+            <div class="formgroup-inline mb-3">
+                <div *ngIf="patientDiseaseSubstanceModel">
+                    <button pButton type="button" (click)="showDialog()" [disabled]="getPatient.invalid">Dodaj chorobe
+                    </button>
+                </div>
+            </div>
+        </form>
+    <div *ngIf="displayDialog">
+        <form [formGroup]="diseasesForm" (ngSubmit)="onSubmitDisease()">
+            <div class="formgroup-inline">
+                <div class="field">
+                    <p-dropdown
+                        [options]="diseases"
+                        formControlName="chooseDisease"
+                        optionLabel="name"
+                        placeholder="Wybierz chorobę"
+                        [showClear]="true">
+                    </p-dropdown>
+                </div>
+                <div class="field">
+                    <p-multiSelect
+                        [options]="searchEngineModel[0]?.activeSubstances"
+                        formControlName="selectedSubstances"
+                        placeholder="Wybierz czynniki aktywne konfliktujące"
+                        optionLabel="name"
+                        display="chip">
+                        <ng-template let-activeSub pTemplate="item">
+                            <div class="flex align-items-center">
+                                <span class="ml-2">{{ activeSub.name }}</span>
+                            </div>
+                        </ng-template>
+                    </p-multiSelect>
+
+
+                </div>
+                <div class="field">
+                    <button pButton type="submit" [disabled]="diseasesForm.invalid">Dodaj</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div *ngIf="patientDiseaseSubstanceModel">
+        <p-panel header="Dane pacjenta | Doktor: {{ patientDiseaseSubstanceModel.userDTO.username }}">
+            <div>
+                <p><strong>Imie:</strong> {{ patientDiseaseSubstanceModel.patientDTO.name }}</p>
+                <p><strong>Nazwisko:</strong> {{ patientDiseaseSubstanceModel.patientDTO.surname }}</p>
+                <p><strong>Wiek:</strong> {{ patientDiseaseSubstanceModel.patientDTO.age }}</p>
+                <p><strong>Płeć:</strong> {{ patientDiseaseSubstanceModel.patientDTO.gender }}</p>
+                <p><strong>Pesel:</strong> {{ patientDiseaseSubstanceModel.patientDTO.uniqueId }}</p>
+            </div>
+        </p-panel>
+        <p-table [value]="patientDiseaseSubstanceModel.diseaseActiveSubstancesDTOList" [paginator]="true"
+                 [rows]="5">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nazwa choroby</th>
+                    <th>Substancje aktywne
+
+                    </th>
+                    <th>Operacje</th>
+                </tr>
+            </ng-template>
+            <ng-template>
+                <tr>
+                <p-table>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Nazwa substancji aktywnej</th>
+                            <th>Dozwolony w ciąży?</th>
+                            <th>Dozowanie</th>
+                            <th>Opis</th>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-diseaseActive>
+                <tr>
+                    <td>{{ diseaseActive.diseaseDTO.name }}</td>
+                    <td>
+                        <p-table [value]="diseaseActive.activeSubstanceDTO">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Nazwa substancji aktywnej</th>
+                                    <th>Dozwolony w ciąży?</th>
+                                    <th>Dozowanie</th>
+                                    <th>Opis</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-substance>
+                                <tr>
+                                    <td>{{ substance.name }}</td>
+                                    <td>{{ substance.pregnance ? 'Tak' : 'Nie' }}</td>
+                                    <td>{{ substance.dosage }}</td>
+                                    <td>{{ substance.description }}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </td>
+                    <td>
+                        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"
+                                (click)="confirmDelete(diseaseActive.diseaseDTO.id)">
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+</div>
+<p-confirmDialog></p-confirmDialog>

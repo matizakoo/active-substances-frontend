@@ -1,0 +1,34 @@
+<div class="card">
+    <div class="col-12">
+        <p-toast key="global-toast"></p-toast>
+        <h5>Tworzenie nowego pacjenta</h5>
+        <form [formGroup]="newPatient" (ngSubmit)="onSubmit()">
+            <div class="formgroup-inline">
+                <div class="field">
+                    <label htmlFor="name" class="p-sr-only">Imie</label>
+                    <input pInputText formControlName="name" id="name" type="text" placeholder="Imie" />
+                </div>
+                <div class="field">
+                    <label htmlFor="surname" class="p-sr-only">Nazwisko</label>
+                    <input pInputText formControlName="surname" id="surname" type="text" placeholder="Nazwisko" />
+                </div>
+                <div class="field">
+                    <label htmlFor="uniqueId" class="p-sr-only">Pesel</label>
+                    <input pInputText formControlName="uniqueId" id="uniqueId" type="text" placeholder="Pesel" />
+                </div>
+                <div class="field">
+                    <label htmlFor="age" class="p-sr-only">Wiek</label>
+                    <input pInputText formControlName="age" id="age" type="number" placeholder="Wiek" />
+                </div>
+                <div class="field">
+                    <label htmlFor="gender" class="p-sr-only">Płeć</label>
+                    <input pInputText formControlName="gender" id="gender" type="text" placeholder="Płeć" />
+                </div>
+
+                <button pButton type="submit" [disabled]="newPatient.invalid">Dodaj</button>
+            </div>
+        </form>
+
+        <app-patient-table></app-patient-table>
+    </div>
+</div>

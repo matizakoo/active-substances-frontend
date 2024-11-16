@@ -24,6 +24,8 @@ import {DiseasesModule} from "./demo/components/diseases/diseases.module";
                     { path: 'activesubstancesconflicts', loadChildren: () => import('./demo/components/activesubstances-conflicts/activesubstances-conflicts.module').then(m => m.ActivesubstancesConflictsModule) },
                     { path: 'activesubstancesdiseasesconflicts', loadChildren: () => import('./demo/components/activesubstances-diseases-conflicts/activesubstances-diseases-conflicts-routing.module').then(m => m.ActivesubstancesDiseasesConflictsRoutingModule) },
                     { path: 'assearchengine', loadChildren: () => import('./demo/components/as-search-engine/as-search-engine.module').then(m => m.AsSearchEngineModule) },
+                    { path: 'patient', loadChildren: () => import('./demo/components/patient/patient.module').then(m => m.PatientModule) },
+                    { path: 'patientmgmt', loadChildren: () => import('./demo/components/patientmgmt/patientmgmt.module').then(m => m.PatientmgmtModule) },
                 ]
             },
             // {
