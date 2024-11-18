@@ -14,6 +14,7 @@ import {PatientService} from "../../service/patient.service";
 import {PatientTableComponent} from "../patient-table/patient-table.component";
 import {ConfirmationService} from "primeng/api";
 import {ConfirmationComponent} from "../uikit/menus/confirmation.component";
+import {PatientModel} from "../../model/patient-model";
 
 @Component({
   selector: 'app-patient',
@@ -37,12 +38,13 @@ export class PatientComponent implements OnInit{
     pregnance: boolean;
     message: string | null = null;
     refreshTrigger: boolean = false;
-    @ViewChild('patientTable') patientTable: PatientTableComponent;
+    patientModels: PatientModel[] = [];
 
     constructor(
         private fb: FormBuilder,
         private patientService: PatientService,
         private toast: ToastService,
+        private confirmation: ConfirmationService,
         private refreshService: RefreshService,
     ) {
         this.activeSubstanceForm = this.fb.group({
@@ -50,6 +52,40 @@ export class PatientComponent implements OnInit{
             pregnance: [false],
             dosage: ['', Validators.required],
             description: ['']
+        });
+    }
+
+    getAllPatients(): void {
+        this.patientService.getAllPatients().subscribe({
+            next: (data) => {
+                this.patientModels = data;
+                console.log(this.patientModels)
+            },
+            error: (err) => console.error('Błąd podczas pobierania listy substancji aktywnych:', err)
+        });
+    }
+
+    confirmDelete(id: number) {
+        this.confirmation.confirm({
+            message: 'Czy na pewno chcesz usunąć ten element?',
+            acceptLabel: 'Tak',
+            rejectLabel: 'Nie',
+            header: 'Potwierdzenie usunięcia',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.patientService.deletePatient(id).subscribe({
+                    next: (data) => {
+                        this.toast.showSuccess('Usunięto pacjenta', 'Sukces');
+                        this.refreshService.triggerRefresh();
+                        this.getAllPatients();
+                    },
+                    error: (err) => {
+                        console.error('Coś poszło nie tak')
+                    }
+                })
+            },
+            reject: () => {
+            }
         });
     }
 
@@ -75,6 +111,7 @@ export class PatientComponent implements OnInit{
     newPatient: FormGroup;
 
     ngOnInit(): void {
+        this.getAllPatients();
         this.newPatient = this.fb.group({
             name: ['', Validators.required],
             surname: ['', Validators.required],
