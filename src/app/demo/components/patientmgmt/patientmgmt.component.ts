@@ -92,8 +92,6 @@ export class PatientmgmtComponent implements OnInit{
                 console.log('return: ', this.searchEngineModel);
             },
             error: (error) => {
-                console.error('Błąd pobierania danych: ', error);
-                this.toast.showError('Nie udało się pobrać danych', 'Błąd');
             }
         });
     }

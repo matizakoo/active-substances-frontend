@@ -15,6 +15,10 @@ import {PatientTableComponent} from "../patient-table/patient-table.component";
 import {ConfirmationService} from "primeng/api";
 import {ConfirmationComponent} from "../uikit/menus/confirmation.component";
 import {PatientModel} from "../../model/patient-model";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {RippleModule} from "primeng/ripple";
+import {TableModule} from "primeng/table";
+import {DropdownModule} from "primeng/dropdown";
 
 @Component({
   selector: 'app-patient',
@@ -27,7 +31,11 @@ import {PatientModel} from "../../model/patient-model";
         InputTextModule,
         ReactiveFormsModule,
         ToastModule,
-        PatientTableComponent
+        PatientTableComponent,
+        ConfirmDialogModule,
+        RippleModule,
+        TableModule,
+        DropdownModule
     ],
     providers: [ConfirmationService],
   templateUrl: './patient.component.html',
@@ -54,6 +62,11 @@ export class PatientComponent implements OnInit{
             description: ['']
         });
     }
+
+    genderOptions = [
+        { label: 'Mężczyzna', value: 'Mężczyzna' },
+        { label: 'Kobieta', value: 'Kobieta' }
+    ];
 
     getAllPatients(): void {
         this.patientService.getAllPatients().subscribe({
@@ -98,6 +111,7 @@ export class PatientComponent implements OnInit{
                     this.message = 'Dodano pacjenta'
                     this.toast.showSuccess( 'Sukces', this.message);
                     this.refreshTrigger = !this.refreshTrigger;
+                    this.getAllPatients();
                 },
                 error: (error) => {
                     this.message = error.error.info
