@@ -5,7 +5,7 @@ import {HttpHeaders} from "@angular/common/http";
   providedIn: 'root'
 })
 export class StaticService {
-    static apiUrl: string = 'http://localhost:8080/';
+    static apiUrl: string = 'http://localhost:8085/';
     static doctor: string = 'doctor/';
     static activesubstances: string = 'activeSubstances';
     static disease: string = 'disease';

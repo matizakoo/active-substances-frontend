@@ -9,7 +9,7 @@ import {InfoDTO} from "../../../info-dto";
   providedIn: 'root'
 })
 export class CategoryService {
-    private apiUrl = 'http://localhost:8080/category';
+    private apiUrl = 'http://localhost:8085/category';
 
     constructor(private http: HttpClient) { }
 
