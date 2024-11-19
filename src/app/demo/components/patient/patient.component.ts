@@ -123,10 +123,10 @@ export class PatientComponent implements OnInit{
     }
 
     newPatient: FormGroup;
-
     ngOnInit(): void {
         this.getAllPatients();
         this.newPatient = this.fb.group({
+            pregnance: [false],
             name: ['', Validators.required],
             surname: ['', Validators.required],
             uniqueId: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],

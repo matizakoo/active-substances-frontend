@@ -25,6 +25,7 @@ import {DiseaseActiveSubstanceDto} from "../../modelDTO/disease-active-substance
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {RippleModule} from "primeng/ripple";
 import {ConfirmationService} from "primeng/api";
+import {CheckboxModule} from "primeng/checkbox";
 
 @Component({
   selector: 'app-patientmgmt',
@@ -43,7 +44,8 @@ import {ConfirmationService} from "primeng/api";
         ToastModule,
         DialogModule,
         ConfirmDialogModule,
-        RippleModule
+        RippleModule,
+        CheckboxModule
     ],
     providers: [ConfirmationService],
   templateUrl: './patientmgmt.component.html',
@@ -68,6 +70,10 @@ export class PatientmgmtComponent implements OnInit{
             this.patientDiseaseSubstanceModel = null;
         });
 
+        this.diseasesForm.get('pregnance')?.valueChanges.subscribe(() => {
+            this.diseasesForm.get('chooseDisease')?.setValue(null);
+        });
+
         this.diseasesForm.get('chooseDisease')?.valueChanges.subscribe((selectedDiseaseId) => {
             this.getActiveSubstancesForDiseaseWithoutConflict(selectedDiseaseId);
             this.diseasesForm.get('selectedSubstances')?.setValue([]);
@@ -75,15 +81,13 @@ export class PatientmgmtComponent implements OnInit{
     }
 
     getActiveSubstancesForDiseaseWithoutConflict(disease: DiseaseModel) {
-        console.log('aa: ', disease)
+        console.log('czy ciaza wybrana: ', this.diseasesForm.get('pregnance').value)
         const searchengine: SearchengineDTO = new SearchengineDTO(
             disease,
             this.patientDiseaseSubstanceModel.diseaseActiveSubstancesDTOList.map(item => item.diseaseDTO),
             this.patientDiseaseSubstanceModel.diseaseActiveSubstancesDTOList.flatMap(item => item.activeSubstanceDTO),
-            true
+            this.diseasesForm.get('pregnance').value
         );
-
-        console.log('search: ', searchengine)
 
         this.searchEngine.getActiveSubstanceSearchEngine(searchengine).subscribe({
             next: (data: SearchEngineModel[]) => {
@@ -107,10 +111,11 @@ export class PatientmgmtComponent implements OnInit{
         );
         this.diseasesForm = this.fb.group({
             selectedSubstances: [[], Validators.required],
-            chooseDisease: ['', Validators.required]
+            chooseDisease: ['', Validators.required],
+            pregnance: [false],
         });
     }
-
+    pregnance: boolean;
     showDialog() {
         this.displayDialog = true;
 

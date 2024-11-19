@@ -21,6 +21,10 @@
     <div *ngIf="displayDialog">
         <form [formGroup]="diseasesForm" (ngSubmit)="onSubmitDisease()">
             <div class="formgroup-inline">
+                <div class="field-checkbox" style="margin-top:10px;">
+                    <p-checkbox formControlName="pregnance" binary="true" inputId="pregnancyCheck" id="pregnancy"></p-checkbox>
+                    <label for="pregnancy">Czy jest w ciąży?</label>
+                </div>
                 <div class="field">
                     <p-dropdown
                         [options]="diseases"
