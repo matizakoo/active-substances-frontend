@@ -10,6 +10,7 @@ import {ConfirmationService, MessageService, SharedModule} from "primeng/api";
 import {TableModule} from "primeng/table";
 import {RefreshService} from "../../service/refresh.service";
 import {ToastService} from "../../service/toast.service";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
     selector: 'app-patient-table',
@@ -36,11 +37,12 @@ export class PatientTableComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getAllPatients();
+        const decoded: any = jwtDecode(localStorage.getItem('auth-token'));
+        this.getAllPatients(localStorage.getItem(decoded.principal));
     }
 
-    getAllPatients(): void {
-        this.patientService.getAllPatients().subscribe({
+    getAllPatients(id: string): void {
+        this.patientService.getAllPatientsForDoctor(id).subscribe({
             next: (data) => {
                 this.patientModels = data;
                 console.log(this.patientModels)
@@ -50,6 +52,7 @@ export class PatientTableComponent implements OnInit {
     }
 
     confirmDelete(id: number) {
+        const decoded: any = jwtDecode(localStorage.getItem('auth-token'));
         this.confirmation.confirm({
             message: 'Czy na pewno chcesz usunąć ten element?',
             acceptLabel: 'Tak',
@@ -61,7 +64,7 @@ export class PatientTableComponent implements OnInit {
                     next: (data) => {
                         this.toast.showSuccess('Usunięto pacjenta', 'Sukces');
                         this.refreshService.triggerRefresh();
-                        this.getAllPatients();
+                        this.getAllPatients(localStorage.getItem(decoded.principal));
                     },
                     error: (err) => {
                         console.error('Coś poszło nie tak')

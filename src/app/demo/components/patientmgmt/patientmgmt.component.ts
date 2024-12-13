@@ -186,6 +186,7 @@ export class PatientmgmtComponent implements OnInit{
         if (this.getPatient.valid) {
             const patient: number = this.getPatient.get('patientId').value;
             this.getSinglePatient(patient);
+            this.patientDiseaseSubstanceModel = null;
         }
     }
 

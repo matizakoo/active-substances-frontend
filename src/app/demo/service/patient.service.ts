@@ -38,6 +38,10 @@ export class PatientService {
         return this.http.get<PatientModel[]>(StaticService.apiUrl+StaticService.doctor+StaticService.patient+'/all');
     }
 
+    getAllPatientsForDoctor(id: string): Observable<PatientModel[]> {
+        return this.http.get<PatientModel[]>(StaticService.apiUrl+StaticService.doctor+StaticService.patient+'/all'+'?idPatient='+id);
+    }
+
     getSinglePatient(idPatient: number): Observable<PatientDiseaseSubstanceModel> {
         const params = new HttpParams().set('idPatient', idPatient);
         return this.http.get<PatientDiseaseSubstanceModel>(StaticService.apiUrl+StaticService.doctor+StaticService.patient+'/getOne',

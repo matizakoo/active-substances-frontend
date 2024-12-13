@@ -19,6 +19,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {RippleModule} from "primeng/ripple";
 import {TableModule} from "primeng/table";
 import {DropdownModule} from "primeng/dropdown";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-patient',
@@ -69,7 +70,9 @@ export class PatientComponent implements OnInit{
     ];
 
     getAllPatients(): void {
-        this.patientService.getAllPatients().subscribe({
+        const decoded: any = jwtDecode(localStorage.getItem('auth-token'));
+        console.log('paietinetcomponent ', decoded.principal)
+        this.patientService.getAllPatientsForDoctor(decoded.principal).subscribe({
             next: (data) => {
                 this.patientModels = data;
                 console.log(this.patientModels)
@@ -103,6 +106,7 @@ export class PatientComponent implements OnInit{
     }
 
     onSubmit() {
+        const decoded: any = jwtDecode(localStorage.getItem('auth-token'));
         if (this.newPatient.valid) {
             const patient: PatientDto = this.newPatient.value;
             console.log(patient)
