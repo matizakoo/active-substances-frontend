@@ -141,7 +141,7 @@ export class ActivesubstancesDiseasesConflictsComponent {
 
     confirmDelete(id: number, id2: number, arg1: string, arg2: string) {
         this.confirmation.confirm({
-            message: `Czy relacje czynnika aktynwego ${arg2} wraz z ${arg1}?`,
+            message: `Czy relacje substancji czynnej ${arg2} wraz z ${arg1}?`,
             acceptLabel: 'Tak',
             rejectLabel: 'Nie',
             header: 'Potwierdzenie usunięcia',

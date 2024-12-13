@@ -9,7 +9,7 @@
                     <p-dropdown [options]="activeSubstances"
                                 formControlName="chooseSubstance"
                                 optionLabel="name"
-                                placeholder="Wybierz czynnik aktywny"
+                                placeholder="Wybierz substancje czynne"
                                 [showClear]="true"></p-dropdown>
                 </div>
                 <div class="field">
@@ -45,11 +45,11 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width: 45%;">
-                        Czynnik aktywny 1
+                        Substancja czynna 1
                         <p-columnFilter type="text" field="name" display="menu" placeholder="Search by disease name"></p-columnFilter>
                     </th>
                     <th style="width: 45%;">
-                        Czynnik aktywny 2
+                        Substancja czynna 2
                         <p-columnFilter type="text" field="description" display="menu" placeholder="Search by description"></p-columnFilter>
                     </th>
                     <th style="width: 10%;">

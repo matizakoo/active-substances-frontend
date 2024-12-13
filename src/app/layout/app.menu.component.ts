@@ -27,7 +27,7 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Choroby', icon: 'pi pi-fw pi-share-alt', routerLink: ['/diseases']},
                     { label: 'Substancje czynne konflikty', icon: 'pi pi-fw pi-sliders-v', routerLink: ['/activesubstancesconflicts']},
                     { label: 'Substancje czynne z chorobami konflikty', icon: 'pi pi-fw pi-lock', routerLink: ['/activesubstancesdiseasesconflicts']},
-                    { label: 'Wyszukaj czynnik aktywny dla przypadku', icon: 'pi pi-fw pi-cog', routerLink: ['/assearchengine']}
+                    { label: 'Wyszukaj substancje czynne dla przypadku', icon: 'pi pi-fw pi-cog', routerLink: ['/assearchengine']}
                 ]
             },
             {

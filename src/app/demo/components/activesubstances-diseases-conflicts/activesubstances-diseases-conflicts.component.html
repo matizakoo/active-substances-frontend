@@ -1,14 +1,14 @@
 <div class="card">
     <div class="col-12">
         <p-toast key="global-toast"></p-toast>
-        <h5>Tworzenie konfliktów czynnika aktywnego z chorobami</h5>
+        <h5>Tworzenie konfliktów substancji czynnych z chorobami</h5>
         <form [formGroup]="diseasesForm" (ngSubmit)="onSubmit()">
             <div class="formgroup-inline">
                 <div class="field">
                     <p-dropdown [options]="activeSubstances"
                                 formControlName="chooseSubstance"
                                 optionLabel="name"
-                                placeholder="Czynnik aktywny"
+                                placeholder="Substancje czynne"
                                 (onChange)="getDiseasesForActiveSubstance($event.value.id)"
                                 [showClear]="true"></p-dropdown>
                 </div>
@@ -45,7 +45,7 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width: 33%;">
-                        Czynnik aktywny
+                        Substancje czynne
                         <p-columnFilter type="text" field="name" display="menu" placeholder="Search by disease name"></p-columnFilter>
                     </th>
                     <th style="width: 33%;">
