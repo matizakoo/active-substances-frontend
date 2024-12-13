@@ -41,7 +41,7 @@
             </div>
         </form>
 
-        <h5>Lista pacjentów (nie zahashowane)</h5>
+        <h5>Lista pacjentów</h5>
         <p-table #dt1 [value]="patientModels" dataKey="id" [rows]="10" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll">
             <ng-template pTemplate="header">
                 <tr>
