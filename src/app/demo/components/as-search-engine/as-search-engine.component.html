@@ -1,7 +1,7 @@
 <div class="card">
     <div class="col-12">
         <p-toast key="global-toast"></p-toast>
-        <h5>Wyszukaj czynniki aktywne dla choroby</h5>
+        <h5>Wyszukaj substancje czynne dla choroby</h5>
         <form [formGroup]="diseasesForm" (ngSubmit)="onSubmit()">
             <div class="formgroup-inline">
                 <div class="field">
@@ -34,7 +34,7 @@
                 <div class="field">
                     <p-multiSelect [options]="activeSubstances"
                                    formControlName="selectUsedActiveSubstances"
-                                   placeholder="Używane czynniki aktywne"
+                                   placeholder="Używane substancje czynne"
                                    optionLabel="name"
                                    display="chip">
                         <ng-template let-actSub pTemplate="item">
