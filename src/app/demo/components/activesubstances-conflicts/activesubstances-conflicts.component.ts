@@ -99,9 +99,9 @@ export class ActivesubstancesConflictsComponent implements OnInit{
                     const infoDTO: InfoDTO = response.body;
                     this.message = infoDTO.info;
                     if (this.message == null)
-                        this.toast.showSuccess('Pomyślnie dodano skonfliktowane substancje aktywne', 'Sukces');
+                        this.toast.showSuccess('Pomyślnie dodano skonfliktowane substancje czynne', 'Sukces');
                     else
-                        this.toast.showWarn(this.message, 'Dodano substancje aktywne');
+                        this.toast.showWarn(this.message, 'Dodano substancje czynne');
                     this.getSubstanceConflicts();
                 },
                 error: (error) => {
@@ -117,7 +117,7 @@ export class ActivesubstancesConflictsComponent implements OnInit{
             next: (data) => {
                 this.activeSubstances = data;
             },
-            error: (err) => console.error('Błąd podczas pobierania listy substancji aktywnych:', err)
+            error: (err) => console.error('Błąd podczas pobierania listy substancji czynnych:', err)
         });
     }
 

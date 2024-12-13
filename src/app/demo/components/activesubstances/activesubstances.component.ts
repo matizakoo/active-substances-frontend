@@ -52,7 +52,7 @@ export class ActivesubstancesComponent implements OnInit{
             const newSubstance: ActivesubstanceModel = this.activeSubstanceForm.value;
             this.activeSubstanceService.addActiveSubstance(newSubstance).subscribe({
                 next: (response) => {
-                    this.message = 'Dodano substancje aktywną'
+                    this.message = 'Dodano substancje czynną'
                     this.toast.showSuccess( 'Sukces', this.message);
                     this.refreshService.triggerRefresh();
                 },

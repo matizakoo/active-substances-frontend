@@ -83,7 +83,7 @@ export class ActivesubstancesTableComponent {
             next: (data) => {
                 this.activeSubstances = data;
             },
-            error: (err) => console.error('Błąd podczas pobierania listy substancji aktywnych:', err)
+            error: (err) => console.error('Błąd podczas pobierania listy substancji czynnych:', err)
         });
     }
 

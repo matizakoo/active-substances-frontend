@@ -101,7 +101,7 @@ export class ActivesubstancesDiseasesConflictsComponent {
                 next: (response) => {
                     const infoDTO: InfoDTO = response.body;
                     this.message = infoDTO.info;
-                    this.toast.showSuccess('Pomyślnie dodano skonfliktowane substancje aktywną z chorobami', 'Sukces');
+                    this.toast.showSuccess('Pomyślnie dodano skonfliktowane substancje czynną z chorobami', 'Sukces');
                     this.getActiveSubstancesDiseases();
                 },
                 error: (error) => {
@@ -117,7 +117,7 @@ export class ActivesubstancesDiseasesConflictsComponent {
             next: (data) => {
                 this.activeSubstances = data;
             },
-            error: (err) => console.error('Błąd podczas pobierania listy substancji aktywnych:', err)
+            error: (err) => console.error('Błąd podczas pobierania listy substancji czynnych:', err)
         });
     }
     getDiseases(): void {
@@ -125,7 +125,7 @@ export class ActivesubstancesDiseasesConflictsComponent {
             next: (data) => {
                 this.diseaseModel = data;
             },
-            error: (err) => console.error('Błąd podczas pobierania listy substancji aktywnych:', err)
+            error: (err) => console.error('Błąd podczas pobierania listy substancji czynnych:', err)
         });
     }
 
@@ -135,7 +135,7 @@ export class ActivesubstancesDiseasesConflictsComponent {
             next: (data) => {
                 this.diseaseModel = data;
             },
-            error: (err) => console.error('Błąd podczas pobierania listy substancji aktywnych:', err)
+            error: (err) => console.error('Błąd podczas pobierania listy substancji czynnych:', err)
         });
     }
 

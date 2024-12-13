@@ -77,7 +77,7 @@ export class PatientComponent implements OnInit{
                 this.patientModels = data;
                 console.log(this.patientModels)
             },
-            error: (err) => console.error('Błąd podczas pobierania listy substancji aktywnych:', err)
+            error: (err) => console.error('Błąd podczas pobierania listy substancji czynnych:', err)
         });
     }
 

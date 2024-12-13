@@ -72,7 +72,7 @@ export class DiseasesComponent implements OnInit{
             console.log(newDisease)
             this.diseaseService.addDisease(newDisease).subscribe({
                 next: (response) => {
-                    this.message = 'Dodano chorobę wraz z ', this.diseasesForm.get('selectedSubstances').value.length, ' substancjami aktywnymi'
+                    this.message = 'Dodano chorobę wraz z ', this.diseasesForm.get('selectedSubstances').value.length, ' substancjami czynnymi'
                     this.toast.showSuccess( 'Sukces', this.message);
                     this.refreshService.triggerRefresh();
                 },
@@ -93,7 +93,7 @@ export class DiseasesComponent implements OnInit{
             next: (data) => {
                 this.activeSubstances = data;
             },
-            error: (err) => console.error('Błąd podczas pobierania listy substancji aktywnych:', err)
+            error: (err) => console.error('Błąd podczas pobierania listy substancji czynnych:', err)
         });
     }
 }
